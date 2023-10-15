@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" dir="rtl" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>فلسطين حرة😉❤️</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
+    <style>
+      body {
+        background-image: url("/images/back.jpg"); /* Add your image file name here */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .container {
+        background-color: #ffffffc4;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+
+        margin-top: 20px;
+      }
+      h3 {
+        text-align: center;
+        direction: rtl;
+        margin-top: 25px;
+      }
+      @media (max-width: 768px) {
+        h3 {
+          margin-top: 15px; /* Adjusted margin for mobile */
+          font-size: 18px; /* Adjusted font size for mobile */
+        }
+      }
+
+      #copyButton {
+        margin-top: 25px !important;
+        float: right;
+        position: relative;
+        top: -70px;
+        right: 8px;
+        border-radius: 50%;
+      }
+      h1 {
+        text-align: center;
+        color: #009c00;
+      }
+      #inputText {
+        width: 100%;
+        padding: 10px;
+        margin: 0;
+        resize: vertical;
+      }
+      #replaceButton {
+        width: 20%;
+        margin-left: 40%;
+        background-color: #009c00;
+      }
+      #outputText {
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        min-height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>❤️فلسطين حرة</h1>
+      <textarea
+        id="inputText"
+        class="form-control"
+        rows="5"
+        dir="rtl"
+        placeholder="أدخل النص هنا"
+      ></textarea>
+      <button id="replaceButton" class="btn btn-primary mt-2">
+        استبدال الكلمات
+      </button>
+      <div id="outputText" dir="rtl" class="mt-2"></div>
+      <button
+        style="float: right"
+        id="copyButton"
+        class="btn btn-secondary mt-2"
+      >
+        <i class="fas fa-copy"></i>
+      </button>
+      <div>
+        <h3>
+          قال الله تعالى : ” أم حسبتم أن تدخلوا الجنة ولما يأتكم مثل الذين خلوا
+          من قبلكم مستهم البأساء والضراء وزلزلوا حتى يقول الرسول والذين آمنوا
+          معه متى <br />نصر الله ألا إن نصر الله قريب ” [البقرة : 214]
+        </h3>
+      </div>
+      <a
+        href="https://www.facebook.com/profile.php?id=100029149515038"
+        target="_blank"
+      >
+        <i class="fab fa-facebook fa-3x"></i>
+      </a>
+    </div>
+
+    <!-- Include Bootstrap and JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+      // Your Google Sheets data in JSON format
+      $("#copyButton").click(function () {
+        const outputText = $("#outputText").text();
+        copyToClipboard(outputText);
+      });
+
+      // Function to copy text to clipboard
+      function copyToClipboard(text) {
+        const tempInput = document.createElement("textarea");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+      }
+      // JavaScript code for word replacement
+      function replaceWords(inputText) {
+        fetch("data.json")
+          .then((response) => response.json())
+          .then((data) => {
+            // Iterate over the data array
+            for (const item of data) {
+              item.Words_English != null
+                ? (inputText = inputText.replace(
+                    new RegExp(item.Words_English, "g"),
+                    encryptWord(item.Words_English)
+                  ))
+                : null;
+              item.Tunisian_words != null
+                ? (inputText = inputText.replace(
+                    new RegExp(item.Tunisian_Words, "g"),
+                    encryptWord(item.item.Tunisian_Words)
+                  ))
+                : null;
+              item.الكلمة != null
+                ? (inputText = inputText.replace(
+                    new RegExp(item.الكلمة, "g"),
+                    encryptWord(item.الكلمة)
+                  ))
+                : null;
+            }
+            // Display the replaced text
+            $("#outputText").text(inputText);
+          })
+          .catch((error) => {
+            console.error("Error fetching data: ", error);
+          });
+      }
+
+      // Event listener for the replace button
+      $("#replaceButton").click(function () {
+        const inputText = $("#inputText").val();
+        const replacedText = replaceWords(inputText);
+        $("#outputText").text(replacedText);
+      });
+      function encryptWord(word) {
+        // Define a mapping of characters to their encrypted forms
+        const encryptionMap = {
+          ت: "ـtـ",
+          س: "ـsـ",
+          ز: "ـzـ",
+          ب: "ـbـ",
+          ن: "ـnـ",
+          م: "ـmـ",
+          ل: "ـlـ",
+          ك: "ـkـ",
+          ف: "ـfـ",
+          ق: "ـqـ",
+          ر: "ـrـ",
+          ض: "ـdـ",
+          ص: "ـsـ",
+          ح: "ـhـ",
+          ع: "ـaـ",
+          خ: "ـxـ",
+          ذ: "ـdhـ",
+          ش: "ـshـ",
+          ي: "ـyـ",
+          و: "ـwـ",
+          ث: "ـthـ",
+          غ: "ـghـ",
+          ه: "ـhـ",
+          ط: "ـtـ",
+          ء: "ـ'ـ",
+          ئ: "ـ'ـ",
+          ؤ: "ـ'ـ",
+          إ: "ـiـ",
+          أ: "ـaـ",
+          آ: "ـaaـ",
+          ى: "ـyـ",
+          ة: "ـtـ",
+          ا: "ـaاـ",
+          ى: "ـyـ",
+        };
+
+        const wordArray = word.split("");
+
+        // Find the middle character (assuming an odd-length word)
+        const middleIndex = Math.floor(wordArray.length / 2);
+
+        // Process the middle character and apply the replacement if it's in the encryption map
+        if (wordArray[middleIndex] in encryptionMap) {
+          wordArray[middleIndex] = encryptionMap[wordArray[middleIndex]];
+        }
+
+        // Convert the array back to a string
+        const encryptedWord = wordArray.join("");
+
+        return encryptedWord;
+      }
+    </script>
+  </body>
+</html>
